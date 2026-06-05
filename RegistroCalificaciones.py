@@ -3,7 +3,8 @@
 """
 . Registrar cantidad de rubros (Examenes, Tarea, Proyecto, Asistencia, PtsExtra, etc)
 . Registrar calificacion en cada rubro - Examen, Tarea, Proyecto
-    . tema - calif , Fecha-calif  :  [27/02/2024 - 10]
+    .EJEMPLO: { Tareas: {"tema1": 10}, Proyectos: {"tema1": 8, "tema2": 7}, Examenes: {"tema1": 9, "tema2": 10, "tema3": 8} }
+
 . Mostrar historial de calificaciones de X rubro
     .Borrar calif por indice/numero en la lista del historial de calificaciones
 """    
@@ -15,22 +16,20 @@ def registrar_rubros():
     rubrosNombre= {}
     for i in range(cantidadRubros):
         rubro= input("Ingrese el nombre del rubro: ")
-        rubrosNombre[rubro]= []
+        rubrosNombre[rubro]= {}
     return rubrosNombre
 
+
 def registrar_calificacion(rubros):
-    rubro= input("Ingrese el nombre del rubro para registrar la calificación: ")
-    if rubro not in rubros:
-        return f"\tEl rubro '{rubro}' no existe. Por favor, regístrelo primero."
-    tema= input("Ingrese el tema de la calificación: ")
-    calificacion= float(input("Ingrese la calificación: "))
-    fecha= input("Ingrese la fecha de la calificación (dd/mm/yyyy): ")
-    rubros[rubro].append({"tema": tema, "calificacion": calificacion, "fecha": fecha})
-    return f"\tCalificación registrada en el rubro '{rubro}'."
-
-
-print(registrar_rubros())
-
+    print("Rubros registrados:")
+    for i in range(len(rubros)):
+        print(f"\t{i+1}. {list(rubros.keys())[i]}") #Diccionario a lista para aprovechar el indice
+    rubroSeleccionado= int(input("Seleccione el número del rubro para registrar la calificación: ")) - 1
+    tema= input("Identificador de la asignación: ")
+    calificacion= float(input("Calificación obtenida: "))
+    #  rubros [Tareas] [Tarea1] = 10 
+    rubros[list(rubros.keys())[rubroSeleccionado]] [tema]= calificacion
+    return rubros
 
 
 
@@ -38,40 +37,18 @@ print(registrar_rubros())
 
 
 
+rubros=registrar_rubros()
+print("")
+registrar_calificacion(rubros)
+print("")
+print(rubros)
+print("")
+registrar_calificacion(rubros)
+print("")
+print(rubros)
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-"""
-{Español: {Tareas: [10,9,8,7], Proyectos: [8,7,10,9], Examenes: [9,10,8,7]},
-Matematicas: {Tareas: [10,9,8,7], Proyectos: [8,7,10,9], Examenes: [9,10,8,7]},}
-
-[Español [Tareas[10,9,8,7], Proyectos[8,7,10,9], Examenes[9,10,8,7]],
-Matematicas]
-
-
-{Tareas: [10,9,8,7], Proyectos: [8,7,10,9], Examenes: [9,10,8,7]}
-
-"""    
-    
-escuela= [["Español", ["Tareas", [10,9,8,7]]  ],
-          "Matematicas"]
-print()
-print("\n---------------------")
-print(escuela[0][1])
-
-if "Español" in escuela[0][0]:
-    print("Tareas: ", escuela[0][1][1])
 
 
