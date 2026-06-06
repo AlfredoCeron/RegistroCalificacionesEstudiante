@@ -31,8 +31,14 @@ def registrar_calificacion(rubros):
     rubros[list(rubros.keys())[rubroSeleccionado]] [tema]= calificacion
     return rubros
 
-
-
+def mostrar_calificaciones(rubros):
+    print("Rubros registrados:")
+    for i in range(len(rubros)):
+        print(f"\t{i+1}. {list(rubros.keys())[i]}") #Diccionario a lista para aprovechar el indice
+    rubroSeleccionado= int(input("Seleccione el número del rubro para mostrar sus calificaciones: ")) - 1
+    print(f"   ===Calificaciones del rubro '{list(rubros.keys())[rubroSeleccionado]}'===")
+    for tema, calif in rubros[list(rubros.keys())[rubroSeleccionado]].items():  #items (tema, calif) en diccionario [2D]
+        print(f"\t{tema}  -  {calif}")
 
 
 
@@ -45,7 +51,8 @@ print(rubros)
 print("")
 registrar_calificacion(rubros)
 print("")
-print(rubros)
+mostrar_calificaciones(rubros)
+print("")
 
 
 
