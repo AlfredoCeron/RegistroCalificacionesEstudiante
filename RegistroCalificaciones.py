@@ -11,12 +11,12 @@
 """    
 
 def registrar_rubros():
-    cantidadRubros= int(input("¿Cuántos rubros desea registrar? "))
+    cantidadRubros= int(input("¿Cuántos rubros desea registrar?:  "))
     if cantidadRubros <= 0:
         return "\tLa cantidad de rubros debe ser mayor a cero."
     rubrosNombre= {}
     for i in range(cantidadRubros):
-        rubro= input("Ingrese el nombre del rubro: ")
+        rubro= input("Ingrese el nombre del rubro:  ")
         rubrosNombre[rubro]= {}
     return rubrosNombre
 
@@ -25,9 +25,9 @@ def registrar_calificacion(rubros):
     print("Rubros registrados:")
     for i in range(len(rubros)):
         print(f"\t{i+1}. {list(rubros.keys())[i]}") #Diccionario a lista para aprovechar el indice
-    rubroSeleccionado= int(input("Seleccione el número del rubro para registrar la calificación: ")) - 1
-    tema= input("Identificador de la asignación: ")
-    calificacion= float(input("Calificación obtenida: "))
+    rubroSeleccionado= int(input("Seleccione el número del rubro para registrar la calificación:  ")) - 1
+    tema= input("Identificador de la asignación:  ")
+    calificacion= float(input("Calificación obtenida:  "))
     #  rubros [Tareas] [Tarea1] = 10 
     rubros[list(rubros.keys())[rubroSeleccionado]] [tema]= calificacion
     return rubros
@@ -36,7 +36,7 @@ def mostrar_calificaciones(rubros):
     print("Rubros registrados:")
     for i in range(len(rubros)):
         print(f"\t{i+1}. {list(rubros.keys())[i]}") #Diccionario a lista para aprovechar el indice
-    rubroSeleccionado= int(input("Seleccione el número del rubro para mostrar sus calificaciones: ")) - 1
+    rubroSeleccionado= int(input("Seleccione el número del rubro para mostrar sus calificaciones:  ")) - 1
     print(f"   ===Calificaciones del rubro '{list(rubros.keys())[rubroSeleccionado]}'===")
     contador=1
     for tema, calif in rubros[list(rubros.keys())[rubroSeleccionado]].items():  #items (tema, calif) en diccionario [2D]
@@ -46,11 +46,30 @@ def mostrar_calificaciones(rubros):
 
 def eliminar_calificacion(rubros):
     rubroSeleccionado=mostrar_calificaciones(rubros)
-    califEliminar=int(input("Ingrese el número de la asignación para eliminar su registro:")) - 1
+    califEliminar=int(input("Ingrese el número de la asignación para eliminar su registro:  ")) - 1
         #Seleccionar rubro a eliminar - acceso a diccionario por "indice"/lista
     rubroEliminar=list(rubros[rubroSeleccionado].keys())   #Rubro-Diccionario Externo
     asignacionEliminar=rubroEliminar[califEliminar]        #Asignación-Diccionario Interno
     del rubros[rubroSeleccionado][asignacionEliminar]
+
+
+def modificar_registro(rubros):
+    rubroSeleccionado=mostrar_calificaciones(rubros)
+    opcAsignaCambiar=int(input("Ingrese el número de la asignación para modificar su registro:  ")) - 1
+        #Seleccionar rubro a modificar - acceso a diccionario por "indice"/lista
+    rubroCambiar=list(rubros[rubroSeleccionado].keys()) #Rubro -Diccionario Externo (Exam,Tarea,Proyecto)
+    asignacionCambiar=rubroCambiar[opcAsignaCambiar]    #Asignación - Diccionario Interno (Exam1, Tarea2)
+
+    opcCambiar=int(input("    1. Nombre de la asignación \n    2. Calificación \nSeleccione el número de lo que desea modificar:  "))
+    if opcCambiar==1:       #Nombre de asignacion
+        nuevoNombre=input("Ingrese el nuevo nombre de la asignación:  ")
+        rubros[rubroSeleccionado][nuevoNombre]=rubros[rubroSeleccionado][asignacionCambiar] #Nuevo registro con valor de "asignacionCambiar" - guarda calif anterior
+        del rubros[rubroSeleccionado][asignacionCambiar]    #Borra registro con nombre anterior. 
+    elif opcCambiar==2:     #Calificacion de asignacion
+        nuevaCalif=float(input("Ingrese la nueva calificación:  "))
+        rubros[rubroSeleccionado][asignacionCambiar]=nuevaCalif #Actualiza califif de registro seleccionado "asignacionCambiar"
+
+    
          
 
 
@@ -60,13 +79,14 @@ def eliminar_calificacion(rubros):
 
 rubros={    "Examen": {"Exam1":10, "Exam2":9}, 
             "Tareas": {"Tarea1":8, "Tarea2":7, "MapaMental":9.6}, 
-            "Proyecto": {"Proyecto1":9, "Investigacion":10, "Infografia":8.5} }
+            "Proyecto": {"Proyecto1":9, "Investigacion":10, "Infografia":8.5} 
+        }
 
 print("")
 for key, value in rubros.items():
     print(key, value)
 print("")
-eliminar_calificacion(rubros)
+modificar_registro(rubros)
 print("")
 for key, value in rubros.items():
     print(key, value)
